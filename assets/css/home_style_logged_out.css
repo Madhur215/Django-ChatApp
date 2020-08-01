@@ -1,0 +1,8 @@
+{% load static %}
+
+body {
+    background-image: url("{% static 'images/TodoBG.png' %}");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat
+}
