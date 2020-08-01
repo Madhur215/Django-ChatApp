@@ -1,0 +1,25 @@
+{% extends "registration/RegisterBase.html" %}
+{% block title %} Sign Up {% endblock %}
+
+{% load crispy_forms_tags %}
+    {% for msg in message %}
+        <script>
+            window.alert(msg)
+        </script>
+    {% endfor %}
+{% block content %}
+
+    <div class="sign-up form" style="max-width: 600px">
+        <h1 class="mt-2">{{heading}}</h1>
+        <hr class="mt-0 mb-4">
+
+        <form method="post" class="form-group" style="max-width: 600px;">
+            {% csrf_token %}
+            {{form|crispy}}
+            <p>Already have an account?<a href="/login">Login here.</a></p>
+            <button type="submit" class="btn btn-success" >Sign Up</button>
+
+        </form>
+    </div>
+{% endblock %}
+
