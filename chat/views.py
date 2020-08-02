@@ -9,3 +9,6 @@ def index(request):
     else:
         return render(request, "chat/home.html", {})
 
+
+def search(request):
+    return render(request, "chat/search.html", {})

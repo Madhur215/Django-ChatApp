@@ -1,10 +1,82 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
+
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+    <div class="sidenav">
+        <div class="row">
+        <div class="col"><h2 style="padding-left: 16px; display: block-content;">PyChat</h2></div>
+        <div class="col"><div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">Search</button>
+<!--            <div id="myDropdown" class="dropdown-content">-->
+<!--                <input type="text" placeholder="Search by name, username.." id="myInput">-->
+<!--                <a href="#about">About</a>-->
+<!--                <a href="#base">Base</a>-->
+<!--                <a href="#blog">Blog</a>-->
+<!--                <a href="#contact">Contact</a>-->
+<!--                <a href="#custom">Custom</a>-->
+<!--                <a href="#support">Support</a>-->
+<!--                <a href="#tools">Tools</a>-->
+<!--                -->
+<!--            </div>-->
+        </div>
+        </div>
+        </div>
+        <hr class="mt-0 mb-4">
+
+    </div>
+
+    <div class="main">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+
+    <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+<!--          document.getElementById("myDropdown").classList.toggle("show");-->
+            location.href = "/search"
+        }
+
+<!--        function filterFunction() {-->
+<!--          var input, filter, ul, li, a, i;-->
+<!--          input = document.getElementById("myInput");-->
+<!--          filter = input.value.toUpperCase();-->
+<!--          div = document.getElementById("myDropdown");-->
+<!--          a = div.getElementsByTagName("a");-->
+<!--          for (i = 0; i < a.length; i++) {-->
+<!--            txtValue = a[i].textContent || a[i].innerText;-->
+<!--            if (txtValue.toUpperCase().indexOf(filter) > -1) {-->
+<!--              a[i].style.display = "";-->
+<!--            } else {-->
+<!--              a[i].style.display = "none";-->
+<!--            }-->
+<!--          }-->
+
+
+
+<!--        }-->
+    </script>
 
 </body>
 </html>
