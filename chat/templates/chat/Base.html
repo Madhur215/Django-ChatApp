@@ -14,7 +14,7 @@
 <body>
     <div class="sidenav">
         <div class="row">
-        <div class="col"><h2 style="padding-left: 16px; display: block-content;">PyChat</h2></div>
+            <a href="/"><div class="col"><h2 style="padding-left: 16px; display: block-content;">PyChat</h2></div></a>
         <div class="col"><div class="dropdown">
             <button onclick="myFunction()" class="btn btn-success">Search</button>
         </div>
@@ -22,8 +22,20 @@
         </div>
         <hr class="mt-0 mb-4">
         <div class="friends">
-            {% block friends_list %}
-            {% endblock %}
+            <ul class="list-group">
+                {% for friend in friends %}
+                    <li class="list-group-item list-group-item-action">
+                        <div class="row">
+                            <div class="col">
+                                <img src="{% static 'images/user_image.jpg' %}" style="width: 50px; height: 50px;">
+                            </div>
+                            <div class="col">
+                                <div class="row" style="font-color: #000"><p>{{friend.name}}</p></div>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
 
     </div>

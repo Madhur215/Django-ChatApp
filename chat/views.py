@@ -2,14 +2,27 @@ from django.shortcuts import render, HttpResponse, redirect
 from .models import UserProfile, Friends, Messages
 
 
+def getFriendsList(id):
+
+    user = UserProfile.objects.get(id=id)
+    ids = list(user.friends_set.all())
+    friends = []
+    for id in ids:
+        num = str(id)
+        # print(type(num), num)
+        fr = UserProfile.objects.get(id=int(num))
+        friends.append(fr)
+    return friends
+
+
 def index(request):
 
     if not request.user.is_authenticated:
         print("Not Logged In!")
         return render(request, "chat/index.html", {})
     else:
-        # friends = Friends.objects.all()
-        return render(request, "chat/home.html", {})
+        friends = getFriendsList(request.user.id)
+        return render(request, "chat/Base.html", {'friends': friends})
 
 
 def search(request):
@@ -26,13 +39,14 @@ def search(request):
         for user in users:
             if query in user.name or query in user.username:
                 user_ls.append(user)
-        return render(request, "chat/search.html", {'users': user_ls})
+        return render(request, "chat/search.html", {'users': user_ls, })
 
     try:
         users = users[:10]
     except:
         users = users[:]
-    return render(request, "chat/search.html", {'users': users})
+    friends = getFriendsList(request.user.id)
+    return render(request, "chat/search.html", {'users': users, 'friends': friends})
 
 
 def addFriend(request, name):
