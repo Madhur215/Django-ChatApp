@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse, redirect
 from .models import UserProfile, Friends, Messages
 
 
@@ -8,6 +8,7 @@ def index(request):
         print("Not Logged In!")
         return render(request, "chat/index.html", {})
     else:
+        # friends = Friends.objects.all()
         return render(request, "chat/home.html", {})
 
 
@@ -27,5 +28,25 @@ def search(request):
                 user_ls.append(user)
         return render(request, "chat/search.html", {'users': user_ls})
 
+    try:
+        users = users[:10]
+    except:
+        users = users[:]
     return render(request, "chat/search.html", {'users': users})
 
+
+def addFriend(request, name):
+
+    id = request.user.id
+    friend = UserProfile.objects.get(username=name)
+    curr_user = UserProfile.objects.get(id=id)
+    print(curr_user.name)
+    ls = curr_user.friends_set.all()
+    flag = 0
+    for username in ls:
+        if username.id == friend.id:
+            flag = 1
+    if flag == 0:
+        print("Friend Added!!")
+        curr_user.friends_set.create(friend=friend.id)
+    return redirect("/search")

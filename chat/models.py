@@ -15,19 +15,19 @@ class UserProfile(models.Model):
 class Messages(models.Model):
 
     description = models.TextField()
-    sender_name = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='sender_name')
-    receiver_name = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='receiver_name')
+    # receiver_name = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='receiver_name')
     time = models.TimeField()
+    receiver_name = models.IntegerField()
 
     def __str__(self):
-        return f"From: {self.sender_name}"
+        return f"From: {self.receiver_name}"
 
 
 class Friends(models.Model):
 
-    friend1 = models.ForeignKey(UserProfile, related_name="friend1", on_delete=models.CASCADE)
-    friend2 = models.ForeignKey(UserProfile, related_name='friend2', on_delete=models.CASCADE)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    friend = models.IntegerField()
 
     def __str__(self):
-        return f"{self.friend1} & {self.friend2}"
+        return f"{self.friend}"
 

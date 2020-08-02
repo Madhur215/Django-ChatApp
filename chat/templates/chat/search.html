@@ -2,7 +2,7 @@
 {% load static %}
 {% block head %}
 {% endblock %}
-{% block title %}Search{% endblock %}
+{% block title %}Search Friends{% endblock %}
 {% block content %}
     <center>
         <div class="wrapper" style="width: 400px;">
@@ -18,7 +18,8 @@
             </div>
             <ul class="list-group list-group-flush">
                 {% for user in users %}
-                    <li class="list-group-item list-group-item-action">
+                    <a href="/addfriend/{{user.username}}" id="user_card">
+                        <li class="list-group-item list-group-item-action" id="{{user.username}}">
                         <div class="row">
                         <div class="col">
                             <img src="{% static 'images/user_image.jpg' %}" style="width: 50px; height: 50px;">
@@ -28,7 +29,8 @@
                             <div class="row"><p>@{{user.username}}</p></div>
                         </div>
                         </div>
-                    </li>
+                        </li>
+                    </a>
                 {% endfor %}
             </ul>
         </div>
