@@ -1,3 +1,38 @@
 {% extends "chat/Base.html" %}
+{% load static %}
+{% block head %}
+{% endblock %}
 {% block title %}Search{% endblock %}
+{% block content %}
+    <center>
+        <div class="wrapper" style="width: 400px;">
+            <h2 style="margin: 16px 0px">Search Users</h2>
+            <div class="topnav">
+                <div class="search-container">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="text" placeholder="Search by name, username" name="search" style="width: 210px">
+                        <button type="submit" class="btn btn-success">Search</button>
+                    </form>
+                </div>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for user in users %}
+                    <li class="list-group-item list-group-item-action">
+                        <div class="row">
+                        <div class="col">
+                            <img src="{% static 'images/user_image.jpg' %}" style="width: 50px; height: 50px;">
+                        </div>
+                        <div class="col">
+                            <div class="row"><p>{{user.name}}</p></div>
+                            <div class="row"><p>@{{user.username}}</p></div>
+                        </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </center>
 
+
+{% endblock %}

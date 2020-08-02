@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
+    {% block head %}{% endblock %}
 
     <title>{% block title %}{% endblock %}</title>
 </head>
@@ -15,18 +16,7 @@
         <div class="row">
         <div class="col"><h2 style="padding-left: 16px; display: block-content;">PyChat</h2></div>
         <div class="col"><div class="dropdown">
-            <button onclick="myFunction()" class="dropbtn">Search</button>
-<!--            <div id="myDropdown" class="dropdown-content">-->
-<!--                <input type="text" placeholder="Search by name, username.." id="myInput">-->
-<!--                <a href="#about">About</a>-->
-<!--                <a href="#base">Base</a>-->
-<!--                <a href="#blog">Blog</a>-->
-<!--                <a href="#contact">Contact</a>-->
-<!--                <a href="#custom">Custom</a>-->
-<!--                <a href="#support">Support</a>-->
-<!--                <a href="#tools">Tools</a>-->
-<!--                -->
-<!--            </div>-->
+            <button onclick="myFunction()" class="btn btn-success">Search</button>
         </div>
         </div>
         </div>
@@ -51,31 +41,9 @@
 
 
     <script>
-        /* When the user clicks on the button,
-        toggle between hiding and showing the dropdown content */
         function myFunction() {
-<!--          document.getElementById("myDropdown").classList.toggle("show");-->
             location.href = "/search"
         }
-
-<!--        function filterFunction() {-->
-<!--          var input, filter, ul, li, a, i;-->
-<!--          input = document.getElementById("myInput");-->
-<!--          filter = input.value.toUpperCase();-->
-<!--          div = document.getElementById("myDropdown");-->
-<!--          a = div.getElementsByTagName("a");-->
-<!--          for (i = 0; i < a.length; i++) {-->
-<!--            txtValue = a[i].textContent || a[i].innerText;-->
-<!--            if (txtValue.toUpperCase().indexOf(filter) > -1) {-->
-<!--              a[i].style.display = "";-->
-<!--            } else {-->
-<!--              a[i].style.display = "none";-->
-<!--            }-->
-<!--          }-->
-
-
-
-<!--        }-->
     </script>
 
 </body>

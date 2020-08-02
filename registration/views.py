@@ -24,7 +24,7 @@ def SignUp(request):
                 form.save()
                 user = authenticate(username=username, password=password)
                 login(request, user)
-                profile = UserProfile(email=email, name=name)
+                profile = UserProfile(email=email, name=name, username=username)
                 profile.save()
                 return redirect("/")
     else:
