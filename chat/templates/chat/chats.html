@@ -1,0 +1,92 @@
+{% extends "chat/Base.html" %}
+{% load static %}
+{% block head %}
+<style>
+
+.container {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.darker {
+    max-height: 120px;
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container img {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.container img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+}
+
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+.time-left {
+  float: left;
+  color: #999;
+}
+
+.messages{
+    height: 500px;
+    width: 1200px;
+    border: thick solid #000;
+    border-width: 2px;
+    margin-top: 16px;
+}
+</style>
+
+{% endblock %}
+
+{% block  content %}
+        <div class="messages">
+            {% for message in messages %}
+                {% if id != message.receiver_name %}
+                    <div class="container darker">
+                        <img src="{% static 'images/user_image.jpg' %}" alt="Avatar" class="right" style="width:100%;">
+                        <p>{{message.description}}</p>
+                        <span class="time-right">{{message.time}}</span>
+                    </div>
+                 {% elif id == message.receiver_name %}
+                    <div class="container">
+                        <img src="{% static 'images/user_image.jpg' %}" alt="Avatar" style="width:100%;">
+                        <p>{{message.description}}</p>
+                        <span class="time-left">{{message.time}}</span>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="row">
+            <form method="post">
+                {% csrf_token %}
+                <div class="col">
+                    <input type="text" placeholder="Search by name, username" name="search"></div>
+                <div class="col">
+                    <button class="btn btn-success">Send</button>
+                </div>
+            </form>
+        </div>
+
+
+
+{% endblock %}

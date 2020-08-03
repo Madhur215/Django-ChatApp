@@ -24,16 +24,18 @@
         <div class="friends">
             <ul class="list-group">
                 {% for friend in friends %}
-                    <li class="list-group-item list-group-item-action">
-                        <div class="row">
-                            <div class="col">
-                                <img src="{% static 'images/user_image.jpg' %}" style="width: 50px; height: 50px;">
+                    <a href="/chat/{{friend.username}}">
+                        <li class="list-group-item list-group-item-action">
+                            <div class="row">
+                                <div class="col">
+                                    <img src="{% static 'images/user_image.jpg' %}" style="width: 50px; height: 50px;">
+                                </div>
+                                <div class="col">
+                                    <div class="row" style="font-color: #000"><p>{{friend.name}}</p></div>
+                                </div>
                             </div>
-                            <div class="col">
-                                <div class="row" style="font-color: #000"><p>{{friend.name}}</p></div>
-                            </div>
-                        </div>
-                    </li>
+                        </li>
+                    </a>
                 {% endfor %}
             </ul>
         </div>

@@ -1,6 +1,7 @@
 import socket
 import threading
 from chat.models import UserProfile
+from . import person
 
 PORT = 5050
 IP = socket.gethostbyname(socket.gethostname())
@@ -16,7 +17,24 @@ clients = {}
 addresses = {}
 
 
-def handle_client(conn):
+def handle_client(client):
+    conn = client.conn
+    addr = client.addr
+    name = conn.recv(BUFF_SIZE).decode(FORMAT)
+    client.set_name(name)
+    clients[conn] = name
+
+    while True:
+        msg = conn.recv(BUFF_SIZE)
+        if msg != "quit":
+            send_message(msg)
+        else:
+            conn.close()
+            del clients[conn]
+            break
+
+
+def send_message(message):
     pass
 
 
@@ -26,8 +44,9 @@ def run_server():
 
     while True:
         conn, address = server_socket.accept()
+        client = person.Person(conn, address)
         addresses[conn] = address
-        thread = threading.Thread(target=handle_client, args=(conn,))
+        thread = threading.Thread(target=handle_client, args=(client,))
         thread.start()
         print(f"[ACTIVE CONNECTIONS] {threading.active_count() - 1}")
 
