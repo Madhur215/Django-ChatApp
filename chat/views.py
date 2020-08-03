@@ -56,7 +56,8 @@ def search(request):
         users = users[:10]
     except:
         users = users[:]
-    friends = getFriendsList(request.user.id)
+    id = getUserId(request.user.username)
+    friends = getFriendsList(id)
     return render(request, "chat/search.html", {'users': users, 'friends': friends})
 
 
@@ -76,7 +77,22 @@ def addFriend(request, name):
     if flag == 0:
         print("Friend Added!!")
         curr_user.friends_set.create(friend=friend.id)
+        friend.friends_set.create(friend=id)
     return redirect("/search")
+
+
+def sortByTime(msg_ls):
+    cnt = 0
+    for i in range(len(msg_ls)):
+        min_ind = i
+        for j in range(i+1, len(msg_ls)):
+            if msg_ls[min_ind].time > msg_ls[j].time:
+                min_ind = j
+        msg_ls[i], msg_ls[min_ind] = msg_ls[min_ind], msg_ls[i]
+        cnt += 1
+        if cnt >= 10:
+            return msg_ls[:10]
+    return msg_ls
 
 
 def chat(request, username):
@@ -96,5 +112,7 @@ def chat(request, username):
         if items.receiver_name == id:
             msg_ls.append(items)
 
+    msg_ls = sortByTime(msg_ls)
     friends = getFriendsList(id)
-    return render(request, "chat/chats.html", {'messages': msg_ls, 'friends': friends, 'id': id})
+    return render(request, "chat/chats.html", {'messages': msg_ls, 'friends': friends,
+                                               'id': id, 'chat_name': friend.name})
