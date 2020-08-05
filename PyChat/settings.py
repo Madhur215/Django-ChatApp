@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'chat.apps.ChatConfig',
     'crispy_forms',
     'registration.apps.RegistrationConfig',
+    'rest_framework',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

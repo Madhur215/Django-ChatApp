@@ -1,0 +1,46 @@
+{% extends 'chat/chats.html' %}
+{% load static %}
+
+{% block message %}
+{% for message in messages %}
+    {% if curr_user.id != message.receiver_name %}
+        <div class="container darker">
+            <img src="{% static 'images/user_image.jpg' %}" alt="Avatar" class="right" style="width:100%;">
+            <p>{{message.description}}</p>
+            <span class="time-right">{{message.time}}</span>
+        </div>
+    {% else %}
+        <div class="container">
+            <img src="{% static 'images/user_image.jpg' %}" alt="Avatar" style="width:100%;">
+            <p>{{message.description}}</p>
+            <span class="time-left">{{message.time}}</span>
+        </div>
+    {% endif %}
+{% endfor %}
+<script>
+function scrolltoend() {
+    $('#board').stop().animate({
+        scrollTop: $('#board')[0].scrollHeight
+    }, 800);
+}
+
+$(function () {
+    setInterval(receive, 1000)
+})
+
+function receive(){
+    $.get('/api/messages/' + sender_id + '/' + receiver_id, function(data){
+        console.log(data);
+        if(data.length !== 0){
+            for(var i = 0; i < data.length; i++){
+                var field = text_box.replace('{message}', data[i].message);
+                $('#board').append(field);
+                scrolltoend();
+            }
+        }
+    })
+}
+
+</script>
+
+{% endblock %}

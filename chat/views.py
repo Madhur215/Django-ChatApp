@@ -1,6 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .models import UserProfile, Friends, Messages
-from .network import client
+from django.views.decorators.csrf import csrf_exempt
+from django.http.response import JsonResponse
+from rest_framework.parsers import JSONParser
+from chat.serializers import MessageSerializer
 
 
 def getFriendsList(id):
@@ -10,7 +13,6 @@ def getFriendsList(id):
         friends = []
         for id in ids:
             num = str(id)
-            # print(type(num), num)
             fr = UserProfile.objects.get(id=int(num))
             friends.append(fr)
         return friends
@@ -25,7 +27,6 @@ def getUserId(username):
 
 
 def index(request):
-
     if not request.user.is_authenticated:
         print("Not Logged In!")
         return render(request, "chat/index.html", {})
@@ -62,7 +63,6 @@ def search(request):
 
 
 def addFriend(request, name):
-
     username = request.user.username
     id = getUserId(username)
     friend = UserProfile.objects.get(username=name)
@@ -85,7 +85,7 @@ def sortByTime(msg_ls):
     cnt = 0
     for i in range(len(msg_ls)):
         min_ind = i
-        for j in range(i+1, len(msg_ls)):
+        for j in range(i + 1, len(msg_ls)):
             if msg_ls[min_ind].time > msg_ls[j].time:
                 min_ind = j
         msg_ls[i], msg_ls[min_ind] = msg_ls[min_ind], msg_ls[i]
@@ -101,18 +101,30 @@ def chat(request, username):
     curr_user = UserProfile.objects.get(id=id)
     print("Name = ", curr_user)
     print("Friend ID = ", friend.id)
-    ls = curr_user.messages_set.all()
-    ls2 = friend.messages_set.all()
-    msg_ls = []
-    for items in ls:
-        if items.receiver_name == friend.id:
-            msg_ls.append(items)
 
-    for items in ls2:
-        if items.receiver_name == id:
-            msg_ls.append(items)
-
-    msg_ls = sortByTime(msg_ls)
     friends = getFriendsList(id)
-    return render(request, "chat/chats.html", {'messages': msg_ls, 'friends': friends,
-                                               'id': id, 'chat_name': friend.name})
+    return render(request, "chat/messages.html",
+                  {'messages': Messages.objects.filter(sender_name=id, receiver_name=friend.id) |
+                               Messages.objects.filter(sender_name=friend.id, receiver_name=id),
+                   'friends': friends,
+                   'curr_user': curr_user, 'friend': friend})
+
+
+@csrf_exempt
+def message_list(request, sender=None, receiver=None):
+
+    if request.method == 'GET':
+        messages = Messages.objects.filter(sender_name=sender, receiver_name=receiver)
+        serializer = MessageSerializer(messages, many=True, context={'request': request})
+        for message in messages:
+            message.seen = True
+            message.save()
+        return JsonResponse(serializer.data, safe=False)
+
+    elif request.method == "POST":
+        data = JSONParser().parse(request)
+        serializer = MessageSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)

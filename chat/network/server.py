@@ -15,6 +15,7 @@ server_socket.bind(ADDRESS)
 
 clients = {}
 addresses = {}
+users = []
 
 
 def handle_client(client):
@@ -23,19 +24,26 @@ def handle_client(client):
     name = conn.recv(BUFF_SIZE).decode(FORMAT)
     client.set_name(name)
     clients[conn] = name
+    users.append(client)
 
     while True:
         msg = conn.recv(BUFF_SIZE)
+        receiver_name = msg.split()[0]
+        # msg = msg.split(' ', 1)[1]
         if msg != "quit":
-            send_message(msg)
+            send_message(msg, receiver_name)
         else:
             conn.close()
             del clients[conn]
+            users.remove(client)
             break
 
 
-def send_message(message):
-    pass
+def send_message(message, receiver):
+    for user in users:
+        if user.username == receiver:
+            user.conn.send(message.encode(FORMAT))
+            break
 
 
 def run_server():
