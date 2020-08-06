@@ -1,24 +1,24 @@
 
-#Django Chat Application
+# Django Chat Application
 
 A chat application built using django rest framework. The 
 user can search other users and add them as a friend and have 
 one to one chat with their friends.
 
-##Screenshots
+## Screenshots
 
-![image](https://github.com/Madhur215/Django-ChatApp/tree/master/Images/search.jpg?raw=true)
+![image](https://github.com/Madhur215/Django-ChatApp/tree/master/Images/search.jpg)
 
-![image](https://github.com/Madhur215/Django-ChatApp/tree/master/Images/chat.jpg?raw=true)
+![image](https://github.com/Madhur215/Django-ChatApp/tree/master/Images/chat.jpg)
 
-##Installation
+## Installation
 
 ```
 pip install django
 pip install django-rest-framework
 ```
 
-##How to use?
+## How to use?
 
 - Clone the repository
 - Inside the project folder, open terminal
