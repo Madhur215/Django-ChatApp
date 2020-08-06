@@ -7,9 +7,9 @@ one to one chat with their friends.
 
 ## Screenshots
 
-![image](https://github.com/Madhur215/Django-ChatApp/tree/master/Images/search.jpg)
+![image](https://github.com/Madhur215/Django-ChatApp/tree/master/Images/search.jpg?raw=true)
 
-![image](https://github.com/Madhur215/Django-ChatApp/tree/master/Images/chat.jpg)
+![image](https://github.com/Madhur215/Django-ChatApp/tree/master/Images/chat.jpg?raw=true)
 
 ## Installation
 
