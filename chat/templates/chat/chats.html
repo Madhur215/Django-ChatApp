@@ -26,8 +26,8 @@
         var messageBody = document.querySelector('.messages');
         messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
 
-        sender_id = "{{ curr_user.id }}";
-        receiver_id = "{{ friend.id }}";
+        sender_id = "{{ friend.id }}";
+        receiver_id = "{{ curr_user.id }}";
 
         function scrolltoend() {
             $('#board').stop().animate({
@@ -46,19 +46,19 @@
             $('#chat-box').on('submit', function (event) {
                 event.preventDefault();
                 var message = $('#msg_field');
-                send('{{ curr_user.id }}', '{{ friend.id }}', message.val());
+                send('{{ curr_user.username }}', '{{ friend.username }}', message.val());
                 message.val('');
             })
         })
-        var today = new Date();
-        var time = today.getHours() + ":" + today.getMinutes()
 
         function send(sender, receiver, message){
-            console.log("YES! WORKING")
+
             $.post('/api/messages', '{"sender_name": "' + sender + '", "receiver_name": "' +
                     receiver + '","description": "' + message + '" }', function (data) {
-                var field = text_box.replace('{message}', message);
-                field.replace('{time}', time)
+                var field = text_box.replace('{description}', message);
+                var today = new Date();
+                var time = today.getHours() + ":" + today.getMinutes()
+                field = field.replace('{time}', time)
                 $('#board').append(field);
                 scrolltoend();
             })

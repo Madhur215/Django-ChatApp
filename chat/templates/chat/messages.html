@@ -3,7 +3,7 @@
 
 {% block message %}
 {% for message in messages %}
-    {% if curr_user.id != message.receiver_name %}
+    {% if curr_user == message.sender_name %}
         <div class="container darker">
             <img src="{% static 'images/user_image.jpg' %}" alt="Avatar" class="right" style="width:100%;">
             <p>{{message.description}}</p>
@@ -28,12 +28,21 @@ $(function () {
     setInterval(receive, 1000)
 })
 
+const text = '<div class="container">'
+            + '<img src="{% static 'images/user_image.jpg' %}" alt="Avatar" style="width:100%;">' +
+            '<p>{description}</p>' +
+            '<span class="time-left">{time}</span>' +
+            '</div>'
+
 function receive(){
     $.get('/api/messages/' + sender_id + '/' + receiver_id, function(data){
+        console.log("PRINTING");
         console.log(data);
         if(data.length !== 0){
             for(var i = 0; i < data.length; i++){
-                var field = text_box.replace('{message}', data[i].message);
+                var field = text.replace('{description}', data[i].description);
+                var time = data[i].time.slice(0, 5) + ' a.m'
+                field = field.replace('{time}', time);
                 $('#board').append(field);
                 scrolltoend();
             }

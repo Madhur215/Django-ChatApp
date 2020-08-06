@@ -99,22 +99,22 @@ def chat(request, username):
     friend = UserProfile.objects.get(username=username)
     id = getUserId(request.user.username)
     curr_user = UserProfile.objects.get(id=id)
-    print("Name = ", curr_user)
-    print("Friend ID = ", friend.id)
+    friend_id = getUserId(username)
+    messages = Messages.objects.filter(sender_name=id, receiver_name=friend.id) | Messages.objects.filter(sender_name=friend.id, receiver_name=id)
 
-    friends = getFriendsList(id)
-    return render(request, "chat/messages.html",
-                  {'messages': Messages.objects.filter(sender_name=id, receiver_name=friend.id) |
-                               Messages.objects.filter(sender_name=friend.id, receiver_name=id),
-                   'friends': friends,
-                   'curr_user': curr_user, 'friend': friend})
+    if request.method == "GET":
+        friends = getFriendsList(id)
+        return render(request, "chat/messages.html",
+                      {'messages': messages,
+                       'friends': friends,
+                       'curr_user': curr_user, 'friend': friend})
 
 
 @csrf_exempt
 def message_list(request, sender=None, receiver=None):
-
     if request.method == 'GET':
-        messages = Messages.objects.filter(sender_name=sender, receiver_name=receiver)
+        print(sender, receiver)
+        messages = Messages.objects.filter(sender_name=sender, receiver_name=receiver, seen=False)
         serializer = MessageSerializer(messages, many=True, context={'request': request})
         for message in messages:
             message.seen = True
