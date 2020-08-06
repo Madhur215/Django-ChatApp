@@ -36,8 +36,6 @@ const text = '<div class="container">'
 
 function receive(){
     $.get('/api/messages/' + sender_id + '/' + receiver_id, function(data){
-        console.log("PRINTING");
-        console.log(data);
         if(data.length !== 0){
             for(var i = 0; i < data.length; i++){
                 var field = text.replace('{description}', data[i].description);

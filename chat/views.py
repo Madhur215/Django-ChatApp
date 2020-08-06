@@ -7,6 +7,11 @@ from chat.serializers import MessageSerializer
 
 
 def getFriendsList(id):
+    """
+    Get the list of friends of the  user
+    :param: user id
+    :return: list of friends
+    """
     try:
         user = UserProfile.objects.get(id=id)
         ids = list(user.friends_set.all())
@@ -21,12 +26,22 @@ def getFriendsList(id):
 
 
 def getUserId(username):
+    """
+    Get the user id by the username
+    :param username:
+    :return: int
+    """
     use = UserProfile.objects.get(username=username)
     id = use.id
     return id
 
 
 def index(request):
+    """
+    Return the home page
+    :param request:
+    :return:
+    """
     if not request.user.is_authenticated:
         print("Not Logged In!")
         return render(request, "chat/index.html", {})
@@ -38,6 +53,11 @@ def index(request):
 
 
 def search(request):
+    """
+    Search users page
+    :param request:
+    :return:
+    """
     users = list(UserProfile.objects.all())
     for user in users:
         if user.username == request.user.username:
@@ -63,6 +83,13 @@ def search(request):
 
 
 def addFriend(request, name):
+    """
+    Add a user to the friend's list
+    :param request:
+    :param name:
+    :return:
+    """
+
     username = request.user.username
     id = getUserId(username)
     friend = UserProfile.objects.get(username=name)
@@ -81,25 +108,16 @@ def addFriend(request, name):
     return redirect("/search")
 
 
-def sortByTime(msg_ls):
-    cnt = 0
-    for i in range(len(msg_ls)):
-        min_ind = i
-        for j in range(i + 1, len(msg_ls)):
-            if msg_ls[min_ind].time > msg_ls[j].time:
-                min_ind = j
-        msg_ls[i], msg_ls[min_ind] = msg_ls[min_ind], msg_ls[i]
-        cnt += 1
-        if cnt >= 10:
-            return msg_ls[:10]
-    return msg_ls
-
-
 def chat(request, username):
+    """
+    Get the chat between two users.
+    :param request:
+    :param username:
+    :return:
+    """
     friend = UserProfile.objects.get(username=username)
     id = getUserId(request.user.username)
     curr_user = UserProfile.objects.get(id=id)
-    friend_id = getUserId(username)
     messages = Messages.objects.filter(sender_name=id, receiver_name=friend.id) | Messages.objects.filter(sender_name=friend.id, receiver_name=id)
 
     if request.method == "GET":
@@ -113,7 +131,6 @@ def chat(request, username):
 @csrf_exempt
 def message_list(request, sender=None, receiver=None):
     if request.method == 'GET':
-        print(sender, receiver)
         messages = Messages.objects.filter(sender_name=sender, receiver_name=receiver, seen=False)
         serializer = MessageSerializer(messages, many=True, context={'request': request})
         for message in messages:

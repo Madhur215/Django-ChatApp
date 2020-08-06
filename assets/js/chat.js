@@ -5,6 +5,7 @@ const text_box = '<div class="container darker">' +
                     + '</div>';
 
 function send(sender, receiver, message, time){
+    console.log("YES! WORKING")
     $.post('api/messages', '{"sender:" "' + sender + '", "receiver": "' + receiver + '", "message": "' +
             message + '"}', function(data){
             var field = text_box.replace('{message}', message);
@@ -23,5 +24,4 @@ function receive(){
             }
         }
     })
-
 }

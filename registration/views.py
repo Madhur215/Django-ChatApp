@@ -5,6 +5,11 @@ from chat.models import UserProfile
 
 
 def SignUp(request):
+    """
+    Sign up view
+    :param request:
+    :return:
+    """
     message = []
     if request.method == "POST":
         form = SignUpForm(request.POST)
