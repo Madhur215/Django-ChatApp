@@ -8,7 +8,8 @@
     left: 0;
     z-index: 20;
     background-color: #a6c7ff;
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: auto;
     padding-top: 20px;
 }
 
