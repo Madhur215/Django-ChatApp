@@ -16,7 +16,18 @@ one to one chat with their friends.
 ```
 pip install django
 pip install django-rest-framework
+```
+
+For pipenv 
+```
 pipenv install django-crispy-forms
+pipenv install django-widget-tweaks
+
+```
+
+after above:
+```
+python manage.py migrate
 ```
 
 ## How to use?
