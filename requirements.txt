@@ -3,6 +3,7 @@ asgiref==3.7.2; python_version >= '3.7'
 django==4.2.7; python_version >= '3.8'
 django-crispy-forms==2.1; python_version >= '3.8'
 django-rest-framework==0.1.0
+django-widget-tweaks==1.5.0; python_version >= '3.8'
 djangorestframework==3.14.0; python_version >= '3.6'
 pytz==2023.3.post1
 sqlparse==0.4.4; python_version >= '3.5'
