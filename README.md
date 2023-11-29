@@ -18,6 +18,18 @@ pip install django
 pip install django-rest-framework
 ```
 
+For pipenv 
+```
+pipenv install django-crispy-forms
+pipenv install django-widget-tweaks
+
+```
+
+after above:
+```
+python manage.py migrate
+```
+
 ## How to use?
 
 - Clone the repository
