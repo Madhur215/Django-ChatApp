@@ -6,6 +6,9 @@ class UserProfile(models.Model):
     name = models.CharField(max_length=25)
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=20, unique=True)
+    avatar = models.ImageField(upload_to='images/', null=True)
+    is_bot = models.BooleanField(default=False)
+    llm_endpoint = models.URLField(null=True)
 
     def __str__(self):
         return f"{self.name}"
