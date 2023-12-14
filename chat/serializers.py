@@ -11,3 +11,8 @@ class MessageSerializer(serializers.ModelSerializer):
         model = Messages
         fields = ['sender_name', 'receiver_name', 'description', 'time']
 
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = '__all__'
