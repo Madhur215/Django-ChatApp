@@ -14,8 +14,7 @@ one to one chat with their friends.
 ## Installation
 
 ```
-pip install django
-pip install django-rest-framework
+pip install -r requirements.txt
 ```
 
 ## How to use?

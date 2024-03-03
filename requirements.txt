@@ -1,0 +1,5 @@
+Django==3.0.8
+django-crispy-forms
+django-registration-redux
+djangorestframework
+django-widget-tweaks
